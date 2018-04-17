@@ -20,7 +20,7 @@ FTP Application using Apache Commons Net API and Swing Application Framework. Th
 6. Click Apply and then OK.
 7. Now the Project is successfully configured and ready to run.
 
-## Steps to setup vsftpd on Ubuntu
+## Steps to setup vsftpd on Ubuntu (or Amazon EC2 Linux Instance)
 1. Installing vsftpd  
  a) sudo apt-get update  
  b) sudo apt-get install vsftpd  
@@ -33,7 +33,7 @@ FTP Application using Apache Commons Net API and Swing Application Framework. Th
  b) sudo ufw allow 21/tcp  
  c) sudo ufw allow 990/tcp  
  d) sudo ufw allow 40000:50000/tcp  
-5. Preparing the User Directory  
+5. Adding a User (for FTP)  
  a) sudo adduser rahuljoshi  
  b) passwd rahuljoshi  
 6. Preparing the User Directory  
@@ -41,14 +41,14 @@ FTP Application using Apache Commons Net API and Swing Application Framework. Th
  b) sudo chown nobody:nogroup /home/rahuljoshi/ftp  
  c) sudo chmod a-w /home/rahuljoshi/ftp     
  d) sudo ls -la /home/rahuljoshi/ftp     
-8. Create User Directory for Uploads   
+7. Create User Directory for Uploads   
  a) sudo mkdir /home/rahuljoshi/ftp/files  
  b) sudo chown rahuljoshi:rahuljoshi /home/rahuljoshi/ftp/files   
  c) sudo ls -la /home/rahuljoshi/ftp
-9. Add a Test File  
- echo "vsftpd test file" | sudo tee /home/rahuljoshi/ftp/files/test.txt  
-10. Configuring FTP Access
- sudo nano /etc/vsftpd.conf  
+8. Add a Test File  
+ echo "vsftpd test file" | sudo tee /home/rahuljoshi/ftp/files/test.txt     
+9. Configuring FTP Access  
+ sudo nano /etc/vsftpd.conf    
   
  Start by opening the config file to verify that the settings in your configuration match those below:  
  ...  
@@ -67,22 +67,22 @@ FTP Application using Apache Commons Net API and Swing Application Framework. Th
  ...  
  When you're done making the change, save and exit the file.  
  
-  11. Add User to userlist  
+  10. Add User to userlist  
    echo "rahuljoshi" | sudo tee -a /etc/vsftpd.userlist  
-  12. Restart vsftpd 
+  11. Restart vsftpd 
    sudo systemctl restart vsftpd    
-  13. Testing FTP Access
+  12. Testing FTP Access
    Suppose Ubuntu IP address is 203.0.113.0  
    ftp -p 203.0.113.0   
    ![Connection Acknowledgement](/screenshots/Connection%20Acknowledgement.PNG)  
-   14. Downloading files  
+   13. Downloading files  
     get files/test.txt    
     ![Download Acknowledgement](/screenshots/Download%20Acknowledgement.PNG)  
-   15. Uploading files  
+   14. Uploading files  
     put test.txt upload.txt  
     ![Upload Acknowledgement](/screenshots/Upload%20Acknowledgement.PNG)  
-   16. Conclusion  
-    If you get proper acknowledgement as shown in steps 13, 14 and 15 then FTP Server setup in Ubuntu is successful. 
+   15. Conclusion  
+    If you get proper acknowledgement as shown in steps 12, 13 and 14 then FTP Server setup in Ubuntu is successful. 
 
 ## Steps of Running the Project
 1. Run  
@@ -90,7 +90,7 @@ FTP Application using Apache Commons Net API and Swing Application Framework. Th
  b) 'SwingFileUploadFTP.java' as Java Application for uploading files using FTP.  
 2. In Host Field, enter  
  a) 'localhost' or '127.0.0.1' if FTP Server is installed on the same machine.  
- b) SERVER_PUBLIC_IP if FTP Server is manually confiigured on hosts like Amazon Web Services, etc.    
+ b) SERVER_PUBLIC_IP if FTP Server is manually configured on hosts like Amazon Web Services, etc.    
  c) SERVER_HOST_NAME if FTP Server is a free FTP Service Provider like DriveHQ,etc.  
 3. In Port Field, enter 21(works in most cases).
 4. Username and Password depend on the FTP Server selected.
